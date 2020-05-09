@@ -1,0 +1,46 @@
+service: voice-transcriber
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-include-dependencies
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-2
+  stage: prod
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'transcribe:StartTranscriptionJob'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 's3:*'
+      Resource: 'arn:aws:s3:::${env:BUCKET_NAME}/*'
+    - Effect: 'Allow'
+      Action:
+        - 'ses:*'
+      Resource: '*'
+custom:
+  apigwBinary:
+    type:
+      - 'audio/x-m4a'
+functions:
+  upload:
+    handler: handler.express
+    integration: LAMBDA
+    memorySize: 128
+    timeout: 60
+    events:
+      - http: 
+          path: '{path+}'
+          method: any
+    environment:
+      BUCKET_NAME: ${env:BUCKET_NAME}
+  filePut:
+    handler: s3handler.filePut
+    events:
+      - s3:
+          bucket: ${env:BUCKET_NAME}
+          event: s3:ObjectCreated:*
+    environment:
+      BUCKET_NAME: ${env:BUCKET_NAME}
