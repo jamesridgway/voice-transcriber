@@ -1,5 +1,6 @@
 service: voice-transcriber
 plugins:
+  - serverless-domain-manager
   - serverless-dotenv-plugin
   - serverless-plugin-include-dependencies
 provider:
@@ -26,6 +27,11 @@ custom:
   apigwBinary:
     type:
       - 'audio/x-m4a'
+  customDomain:
+    domainName: ${env:DOMAIN_NAME}
+    basePath: ''
+    stage: ${self:provider.stage}
+
 functions:
   upload:
     handler: handler.express

@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
-    "serverless": "~1.70.0"
+    "serverless": "~1.70.0",
+    "serverless-domain-manager": "^4.0.0"
   }
 }
