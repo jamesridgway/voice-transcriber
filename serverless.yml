@@ -7,6 +7,8 @@ provider:
   runtime: nodejs12.x
   region: eu-west-2
   stage: prod
+  apiKeys:
+    - voice-transcriber
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -34,6 +36,7 @@ functions:
       - http: 
           path: '{path+}'
           method: any
+          private: true
     environment:
       BUCKET_NAME: ${env:BUCKET_NAME}
   filePut:
