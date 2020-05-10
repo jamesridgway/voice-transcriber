@@ -49,7 +49,7 @@ module.exports.filePut = (event, context, callback) => {
                 transcript += "Transcript file s3://" + process.env.BUCKET_NAME + "/" + fileName
                 const params = {
                     Destination: {
-                        ToAddresses: [process.env.recipient]
+                        ToAddresses: [process.env.RECIPIENT]
                     },
                     Message: {
                         Body: {
@@ -63,7 +63,7 @@ module.exports.filePut = (event, context, callback) => {
                             Data: fileName
                         }
                     },
-                    Source: 'Voice Transcriber <' + process.env.sender + '>',
+                    Source: 'Voice Transcriber <' + process.env.SENDER + '>',
                 };
             
                 ses.sendEmail(params, (err, data) => {
