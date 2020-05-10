@@ -28,9 +28,11 @@ custom:
     type:
       - 'audio/x-m4a'
   customDomain:
+    certificateName: ${env:DOMAIN_NAME}
     domainName: ${env:DOMAIN_NAME}
     basePath: ''
     stage: ${self:provider.stage}
+    createRoute53Record: true
 
 functions:
   upload:
@@ -53,3 +55,5 @@ functions:
           event: s3:ObjectCreated:*
     environment:
       BUCKET_NAME: ${env:BUCKET_NAME}
+      RECIPIENT: ${env:RECIPIENT}
+      SENDER: ${env:SENDER}
