@@ -24,9 +24,6 @@ provider:
         - 'ses:*'
       Resource: '*'
 custom:
-  apigwBinary:
-    type:
-      - 'audio/x-m4a'
   customDomain:
     certificateName: ${env:DOMAIN_NAME}
     domainName: ${env:DOMAIN_NAME}
