@@ -17,8 +17,8 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
-    "serverless": "^1.70.1",
+    "nodemon": "^2.0.4",
+    "serverless": "^1.82.0",
     "serverless-domain-manager": "^4.2.0"
   }
 }
