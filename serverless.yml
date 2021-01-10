@@ -1,15 +1,17 @@
 service: voice-transcriber
+useDotenv: true
 plugins:
   - serverless-domain-manager
-  - serverless-dotenv-plugin
   - serverless-plugin-include-dependencies
 provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-2
   stage: prod
-  apiKeys:
-    - voice-transcriber
+  apiGateway:
+    apiKeys:
+      - voice-transcriber
+    shouldStartNameWithService: true
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -34,13 +36,13 @@ custom:
 functions:
   upload:
     handler: handler.express
-    integration: LAMBDA
     memorySize: 128
     timeout: 60
     events:
       - http: 
           path: '{path+}'
           method: any
+          integration: LAMBDA
           private: true
     environment:
       BUCKET_NAME: ${env:BUCKET_NAME}
